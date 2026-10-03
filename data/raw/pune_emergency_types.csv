@@ -1,0 +1,8 @@
+type_id,name,priority,severity_weight,tenders_required
+ET-01,Commercial / Industrial Fire,Priority 1 (Critical),1.2,3
+ET-02,Residential Building Fire,Priority 1 (Critical),1.1,2
+ET-03,Hazardous Chemical / LPG Leak,Priority 1 (Critical),1.3,2
+ET-04,Road Traffic Accident & Extrication,Priority 2 (Urgent),1.0,1
+ET-05,Structural / Wada Collapse,Priority 1 (Critical),1.25,3
+ET-06,Water Rescue / Flood Evacuation,Priority 2 (Urgent),1.15,2
+ET-07,Electrical Transformer / Tree Fall,Priority 3 (Standard),0.9,1

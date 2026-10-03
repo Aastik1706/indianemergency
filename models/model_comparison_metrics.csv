@@ -1,0 +1,4 @@
+Model,MAE (mins),RMSE (mins),R2 Score,Median AE (mins)
+Linear Regression (Baseline),1.044,1.379,0.8735,0.847
+Random Forest Regressor,0.869,1.115,0.9172,0.725
+Gradient Boosting Regressor,0.829,1.043,0.9276,0.694

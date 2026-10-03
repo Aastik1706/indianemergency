@@ -1,0 +1,16 @@
+ward_id,ward_name,zone,centroid_lat,centroid_lon,area_sqkm,density_tier,road_congestion_baseline
+WD-01,Shivaji Nagar - Ghole Road,Central Zone,18.5314,73.8446,12.4,High,1.35
+WD-02,Kasba - Vishrambaug Wada,Central Zone,18.5158,73.856,6.8,Extreme,1.55
+WD-03,Bhavani Peth Commercial Core,Central Zone,18.505,73.871,7.2,Extreme,1.5
+WD-04,Kothrud - Bavdhan,West Zone,18.5042,73.8055,24.5,Moderate,1.25
+WD-05,Aundh - Baner IT Hub,West Zone,18.56,73.8,22.1,High,1.4
+WD-06,Yerawada - Kalas - Dhanori,North Zone,18.56,73.88,28.3,High,1.35
+WD-07,Nagar Road - Vadgaon Sheri,East Zone,18.55,73.92,26.7,High,1.45
+WD-08,Hadapsar - Mundhwa Industrial,East Zone,18.5,73.935,31.0,High,1.4
+WD-09,Bibvewadi,South Zone,18.475,73.865,14.2,Moderate,1.2
+WD-10,Dhankawadi - Sahakarnagar,South Zone,18.47,73.845,16.5,Moderate,1.25
+WD-11,Sinhagad Road Corridor,South Zone,18.48,73.82,19.8,High,1.45
+WD-12,Warje - Karvenagar,West Zone,18.49,73.805,15.3,Moderate,1.3
+WD-13,Kondhwa - Yewalewadi,South Zone,18.46,73.895,25.1,Moderate,1.35
+WD-14,Wanowrie - Ramtekdi,East Zone,18.495,73.895,13.9,Moderate,1.25
+WD-15,Dhole Patil Road / Pune Station,Central Zone,18.53,73.875,8.5,Extreme,1.6

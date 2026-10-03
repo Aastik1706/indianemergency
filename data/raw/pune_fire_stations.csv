@@ -1,0 +1,15 @@
+station_id,station_name,latitude,longitude,fleet_capacity,established_year
+FS-01,Central Fire Station (Bhavani Peth),18.5089,73.8677,8,1945
+FS-02,Erandwane Fire Station,18.5074,73.834,5,1978
+FS-03,Aundh Fire Station,18.558,73.8075,4,1998
+FS-04,Kasba Peth Fire Station,18.5204,73.8567,4,1962
+FS-05,Hadapsar Fire Station,18.5089,73.926,6,1985
+FS-06,Kothrud Fire Station,18.5074,73.8077,5,1992
+FS-07,Yerawada Fire Station,18.5529,73.8797,5,1980
+FS-08,Sinhagad Road Fire Station,18.478,73.829,4,2005
+FS-09,Katraj Fire Station,18.4575,73.8677,4,2002
+FS-10,Pashan Fire Station,18.5415,73.7925,3,2010
+FS-11,Viman Nagar Fire Station,18.5679,73.9143,5,2012
+FS-12,Kondhwa Fire Station,18.472,73.891,4,2008
+FS-13,Warje Fire Station,18.483,73.795,3,2015
+FS-14,Baner Fire Station,18.559,73.7868,4,2016

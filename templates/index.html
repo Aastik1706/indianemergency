@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pune Emergency Response System | Apple Cupertino Edition</title>
+    <meta name="description" content="AI decision-support and emergency vehicle transit time prediction system for Pune Municipal Corporation Fire Brigade.">
+    
+    <!-- SF Pro Display & Text Typography via Apple Font Stack and Google Fonts Inter fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- ==================================================================== -->
+    <!-- 1. APPLE GLOBAL NAVIGATION (48px Minimal Frosted Glass) -->
+    <!-- ==================================================================== -->
+    <header class="apple-global-nav">
+        <div class="nav-content">
+            <a href="#" class="nav-brand">
+                <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <span class="brand-title">EmergencyOS</span>
+                <span class="brand-subtitle">Pune</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#simulator" class="nav-link active" data-tab-target="simulator-tab">Simulator & ETA</a>
+                <a href="#analytics" class="nav-link" data-tab-target="analytics-tab">City Analytics</a>
+                <a href="#explorer" class="nav-link" data-tab-target="explorer-tab">Dataset</a>
+                <a href="#guide" class="nav-link" data-tab-target="guide-tab">Architecture</a>
+            </div>
+
+            <div class="nav-actions">
+                <button type="button" class="apple-pill-btn-small" id="header-simulate-btn">
+                    Get My Location ETA
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================================================================== -->
+    <!-- 2. APPLE HERO SECTION (Large Typography, Confident, Clean) -->
+    <!-- ==================================================================== -->
+    <section class="apple-hero" id="overview">
+        <div class="hero-container">
+            <span class="hero-eyebrow">PMC Fire & Rescue Services &bull; Machine Learning Platform</span>
+            
+            <h1 class="hero-headline">
+                Emergency response.<br>
+                <span class="hero-headline-sub">Engineered for seconds.</span>
+            </h1>
+
+            <p class="hero-description">
+                Enter your location in Pune or click the map to instantly identify your nearest fire station and calculate precision arrival times (ETA). Calibrated for monsoon rainfall, corridor traffic, and 11,973 municipal dispatch records.
+            </p>
+
+            <!-- Apple 4-Pill Performance Metric Showcase -->
+            <div class="hero-stats-grid">
+                <div class="hero-stat-card">
+                    <div class="hero-stat-value">0.83 <span class="stat-unit">min</span></div>
+                    <div class="hero-stat-label">Mean Absolute Error</div>
+                    <div class="hero-stat-sub">Gradient Boosting Champion</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-value">92.8<span class="stat-unit">%</span></div>
+                    <div class="hero-stat-label">Variance Explained (R²)</div>
+                    <div class="hero-stat-sub">Chronological 80/20 Test Split</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-value">11,973</div>
+                    <div class="hero-stat-label">Audited Incidents</div>
+                    <div class="hero-stat-sub">Star-Schema SQL Database</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-value">14 <span class="stat-unit">stations</span></div>
+                    <div class="hero-stat-label">Citywide Coverage</div>
+                    <div class="hero-stat-sub">15 Municipal Ward Centroids</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- 3. APPLE STICKY SEGMENTED TAB BAR -->
+    <!-- ==================================================================== -->
+    <div class="apple-segmented-bar-wrapper">
+        <div class="apple-segmented-bar">
+            <button type="button" class="nav-btn active" data-tab="simulator-tab">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Live ETA & Simulator</span>
+            </button>
+            <button type="button" class="nav-btn" data-tab="analytics-tab">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                <span>City Analytics</span>
+            </button>
+            <button type="button" class="nav-btn" data-tab="explorer-tab">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                <span>Dataset Explorer</span>
+            </button>
+            <button type="button" class="nav-btn" data-tab="guide-tab">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <span>Plain English Guide</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- 4. MAIN INTERACTIVE CONTENT AREA -->
+    <!-- ==================================================================== -->
+    <main class="app-main">
+
+        <!-- ============================================================== -->
+        <!-- TAB 1: PREDICTION SIMULATOR & GEOSPATIAL MAP -->
+        <!-- ============================================================== -->
+        <section id="simulator-tab" class="tab-content active">
+            
+            <!-- Quick Preset Buttons (Apple-style Quick Switcher) -->
+            <div class="preset-strip">
+                <span class="preset-label">Quick Scenarios:</span>
+                <div class="preset-buttons">
+                    <button type="button" class="preset-btn active" data-preset="typical">
+                        ☀️ Typical Day (3.5 km &bull; 11:00)
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="evening-peak">
+                        🚗 Evening Peak (18:30 &bull; +45% Congestion)
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="monsoon-rain">
+                        ⛈️ Heavy Monsoon Downpour (20 mm/h)
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="long-haul">
+                        🛣️ Cross-City Long Distance (9.5 km)
+                    </button>
+                </div>
+            </div>
+
+            <div class="simulator-bento-grid">
+                
+                <!-- Bento Column 1: Dispatch Scenario Controls -->
+                <div class="apple-card control-card">
+                    
+                    <!-- Apple Mode Switcher: Location-based vs Manual Entry -->
+                    <div class="input-mode-switcher-container">
+                        <div class="apple-sub-segmented-control">
+                            <button type="button" class="mode-tab-btn active" id="mode-location-btn" data-mode="location">
+                                📍 Enter My Location
+                            </button>
+                            <button type="button" class="mode-tab-btn" id="mode-manual-btn" data-mode="manual">
+                                ⚙️ Manual Parameters
+                            </button>
+                        </div>
+                    </div>
+
+                    <form id="prediction-form" class="apple-form">
+                        
+                        <!-- ============================================== -->
+                        <!-- MODE 1: LOCATION SEARCH & AUTO-DISPATCH -->
+                        <!-- ============================================== -->
+                        <div id="location-mode-section">
+                            
+                            <div class="form-row">
+                                <label for="location-search-input">
+                                    <span class="label-text">Your Location in Pune</span>
+                                    <button type="button" class="apple-text-btn" id="btn-use-gps">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="12 2 15 11 12 9 9 11 12 2"/></svg>
+                                        <span>Use My GPS</span>
+                                    </button>
+                                </label>
+                                
+                                <div class="location-input-wrapper">
+                                    <svg class="location-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    <input type="text" id="location-search-input" placeholder="Type area (e.g. FC Road, Viman Nagar, Kothrud, Hinjewadi...)" class="apple-search-input-field" autocomplete="off">
+                                    <button type="button" id="btn-clear-search" class="clear-input-btn" style="display:none;">&times;</button>
+                                </div>
+                                <div id="location-suggestions-dropdown" class="suggestions-dropdown" style="display:none;"></div>
+                            </div>
+
+                            <!-- Quick Locality Pills -->
+                            <div class="form-row">
+                                <span class="sub-label-text">Popular Pune Landmarks (Tap to Select):</span>
+                                <div class="locality-chips-wrapper">
+                                    <button type="button" class="locality-chip active" data-landmark="Fergusson College (FC) Road, Deccan">FC Road</button>
+                                    <button type="button" class="locality-chip" data-landmark="Kothrud Stand / Karve Road">Kothrud</button>
+                                    <button type="button" class="locality-chip" data-landmark="Phoenix Marketcity, Viman Nagar">Viman Nagar</button>
+                                    <button type="button" class="locality-chip" data-landmark="Magarpatta Cybercity, Hadapsar">Magarpatta</button>
+                                    <button type="button" class="locality-chip" data-landmark="Shaniwar Wada, Kasba Peth">Shaniwar Wada</button>
+                                    <button type="button" class="locality-chip" data-landmark="Hinjewadi IT Park Phase 1">Hinjewadi</button>
+                                    <button type="button" class="locality-chip" data-landmark="Balewadi High Street, Baner">Baner / Balewadi</button>
+                                    <button type="button" class="locality-chip" data-landmark="Swargate Bus Terminal & Metro">Swargate</button>
+                                    <button type="button" class="locality-chip" data-landmark="Pune Railway Station (Central)">Pune Station</button>
+                                    <button type="button" class="locality-chip" data-landmark="Bremen Chowk, Aundh">Aundh</button>
+                                </div>
+                            </div>
+
+                            <!-- Live Dispatch Match Preview Card -->
+                            <div class="apple-dispatch-match-card">
+                                <div class="match-card-header">
+                                    <span class="match-badge">AUTO-DETECTED DISPATCH ROUTE</span>
+                                    <span class="match-loc" id="match-location-name">FC Road, Deccan</span>
+                                </div>
+                                <div class="match-card-grid">
+                                    <div class="match-item">
+                                        <span class="match-label">Nearest Responding Station</span>
+                                        <span class="match-value" id="match-station-name">Erandwane Fire Station (FS-02)</span>
+                                        <span class="match-sub" id="match-station-fleet">Fleet: 5 tenders</span>
+                                    </div>
+                                    <div class="match-item">
+                                        <span class="match-label">Road Network Distance</span>
+                                        <span class="match-value text-blue" id="match-distance-val">2.1 km</span>
+                                        <span class="match-sub">Circuity Calibrated (1.35x)</span>
+                                    </div>
+                                    <div class="match-item">
+                                        <span class="match-label">Destination Ward / Zone</span>
+                                        <span class="match-value" id="match-ward-name">Shivaji Nagar - Ghole Road</span>
+                                        <span class="match-sub" id="match-ward-zone">Zone: Central</span>
+                                    </div>
+                                    <div class="match-item">
+                                        <span class="match-label">Backup Secondary Station</span>
+                                        <span class="match-value" id="match-backup-station">Kasba Peth Fire Station</span>
+                                        <span class="match-sub" id="match-backup-dist">2.2 km away</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- ============================================== -->
+                        <!-- MODE 2: MANUAL PARAMETER ENTRY (CUSTOM VALUES) -->
+                        <!-- ============================================== -->
+                        <div id="manual-mode-section" style="display: none;">
+                            
+                            <div class="form-row">
+                                <label for="station-select">
+                                    <span class="label-text">Origin Fire Station</span>
+                                    <span class="apple-tag" id="station-fleet-badge">Fleet: 8 tenders</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="station-select" class="apple-select">
+                                        <!-- Populated dynamically via JS -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="ward-select">
+                                    <span class="label-text">Destination Ward / Locality</span>
+                                    <span class="apple-tag" id="ward-zone-badge">Zone: Central</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="ward-select" class="apple-select">
+                                        <!-- Populated dynamically via JS -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Manual Driving Distance Slider -->
+                            <div class="form-row slider-group">
+                                <div class="slider-header-row">
+                                    <span class="label-text">Road Network Distance</span>
+                                    <span class="slider-display-val" id="distance-val">3.5 km</span>
+                                </div>
+                                <input type="range" id="distance-slider" min="0.8" max="15.0" step="0.1" value="3.5" class="apple-slider">
+                                <div class="slider-tick-labels">
+                                    <span>0.8 km (Nearby)</span>
+                                    <span>5.0 km</span>
+                                    <span>15.0 km (Cross-City)</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- ============================================== -->
+                        <!-- SHARED CONTEXT CONTROLS -->
+                        <!-- ============================================== -->
+                        <!-- Emergency Category -->
+                        <div class="form-row">
+                            <label for="emergency-select">
+                                <span class="label-text">Incident Category</span>
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="emergency-select" class="apple-select">
+                                    <option value="Residential Building Fire" selected>Residential Building Fire</option>
+                                    <option value="Commercial / Industrial Fire">Commercial / Industrial Fire (High Severity)</option>
+                                    <option value="Hazardous Chemical / LPG Leak">Hazardous Chemical / LPG Leak</option>
+                                    <option value="Road Traffic Accident & Extrication">Road Traffic Accident & Extrication</option>
+                                    <option value="Structural / Wada Collapse">Structural / Wada Collapse</option>
+                                    <option value="Water Rescue / Flood Evacuation">Water Rescue / Flood Evacuation</option>
+                                    <option value="Electrical Transformer / Tree Fall">Electrical Transformer / Tree Fall</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Time of Day Slider -->
+                        <div class="form-row slider-group">
+                            <div class="slider-header-row">
+                                <span class="label-text">Time of Dispatch</span>
+                                <span class="slider-display-val highlight" id="hour-val">18:00 (Evening Rush Hour)</span>
+                            </div>
+                            <input type="range" id="hour-slider" min="0" max="23" step="1" value="18" class="apple-slider">
+                            <div class="slider-tick-labels">
+                                <span>00:00 (Night)</span>
+                                <span>09:00 (Morning Peak)</span>
+                                <span>18:00 (Evening Peak)</span>
+                                <span>23:00</span>
+                            </div>
+                        </div>
+
+                        <!-- Weather Segmented Pill Control -->
+                        <div class="form-row">
+                            <span class="label-text">Monsoon & Weather Friction</span>
+                            <div class="weather-segmented-control">
+                                <button type="button" class="weather-btn" data-rain="0.0" data-monsoon="0">
+                                    <span class="weather-symbol">☀️</span>
+                                    <span class="weather-name">Clear / Dry</span>
+                                </button>
+                                <button type="button" class="weather-btn" data-rain="5.0" data-monsoon="1">
+                                    <span class="weather-symbol">🌦️</span>
+                                    <span class="weather-name">Light Rain</span>
+                                </button>
+                                <button type="button" class="weather-btn active" data-rain="20.0" data-monsoon="1">
+                                    <span class="weather-symbol">⛈️</span>
+                                    <span class="weather-name">Downpour</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Calculate Button -->
+                        <div class="form-row action-row">
+                            <button type="button" id="predict-btn" class="apple-primary-btn">
+                                <span>Calculate Arrival Time (ETA)</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Bento Column 2: Prediction Display & Interactive Map -->
+                <div class="results-bento-column">
+                    
+                    <!-- Prediction Result Bento Tile -->
+                    <div class="apple-card result-card">
+                        <div class="result-card-top">
+                            <div>
+                                <span class="apple-card-eyebrow">PREDICTED ARRIVAL TIME (ETA)</span>
+                                <div class="big-metric-container">
+                                    <span class="big-metric-number" id="result-minutes">--</span>
+                                    <span class="big-metric-unit">minutes</span>
+                                </div>
+                                <div class="clock-arrival-callout" id="result-clock-eta">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    <span>Expected Arrival: Calculating...</span>
+                                </div>
+                            </div>
+                            <div class="status-badge-container">
+                                <span class="apple-status-pill normal" id="risk-badge">
+                                    <span class="status-indicator"></span>
+                                    <span id="risk-badge-text">CALCULATING...</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- 3-Column Statistical Breakdown -->
+                        <div class="result-stats-strip">
+                            <div class="stat-pill-box">
+                                <span class="stat-pill-label">90% Confidence Window</span>
+                                <span class="stat-pill-val" id="result-interval">-- to -- mins</span>
+                            </div>
+                            <div class="stat-pill-box">
+                                <span class="stat-pill-label">Corridor Traffic Surcharge</span>
+                                <span class="stat-pill-val" id="result-traffic">--x Baseline</span>
+                            </div>
+                            <div class="stat-pill-box">
+                                <span class="stat-pill-label">Effective Transit Speed</span>
+                                <span class="stat-pill-val" id="result-speed">-- km/h</span>
+                            </div>
+                        </div>
+
+                        <!-- Operational Guidance Callout -->
+                        <div class="apple-callout" id="operational-explanation">
+                            <svg class="callout-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            <div class="callout-content">
+                                <strong>System Ready:</strong> Enter your Pune location or click anywhere on the map to evaluate arrival time.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Bento Tile -->
+                    <div class="apple-card map-card">
+                        <div class="map-card-header">
+                            <div>
+                                <span class="apple-card-eyebrow">GEOSPATIAL ROUTING & LIVE PINNING</span>
+                                <h3 class="apple-card-title">Pune Municipal Fire Station Network</h3>
+                                <p class="map-hint">💡 Tip: Click anywhere on the map to drop a pin on your location.</p>
+                            </div>
+                            <div class="apple-map-legend">
+                                <span class="legend-item"><span class="legend-dot user-pin"></span> Your Location</span>
+                                <span class="legend-item"><span class="legend-dot station"></span> Fire Station</span>
+                                <span class="legend-item"><span class="legend-dot ward"></span> Destination Ward</span>
+                            </div>
+                        </div>
+                        <div id="pune-map" class="apple-map-viewport"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: CITYWIDE OPERATIONAL ANALYTICS -->
+        <!-- ============================================================== -->
+        <section id="analytics-tab" class="tab-content">
+            <div class="analytics-container">
+                
+                <div class="section-heading">
+                    <span class="section-eyebrow">EMPIRICAL BENCHMARKS</span>
+                    <h2 class="section-title">Citywide Operational Analytics</h2>
+                    <p class="section-sub">Rigorous empirical patterns derived from 11,973 verified dispatches across 2023–2024.</p>
+                </div>
+
+                <!-- 4 Bento KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="apple-card kpi-tile">
+                        <span class="kpi-eyebrow">TOTAL CALLS ANALYZED</span>
+                        <div class="kpi-value">11,973</div>
+                        <span class="kpi-description">Zero synthetic shortcuts &bull; 99.57% cleaned retention</span>
+                    </div>
+
+                    <div class="apple-card kpi-tile">
+                        <span class="kpi-eyebrow">AVERAGE CITY RESPONSE</span>
+                        <div class="kpi-value text-blue">8.53 <span class="kpi-unit">min</span></div>
+                        <span class="kpi-description">Median: 7.68 min &bull; SD: 3.87 min</span>
+                    </div>
+
+                    <div class="apple-card kpi-tile">
+                        <span class="kpi-eyebrow">EVENING PEAK SURCHARGE</span>
+                        <div class="kpi-value text-orange">+45<span class="kpi-unit">%</span></div>
+                        <span class="kpi-description">17:00–21:00 peak versus midnight baseline</span>
+                    </div>
+
+                    <div class="apple-card kpi-tile">
+                        <span class="kpi-eyebrow">MONSOON DELUGE FRICTION</span>
+                        <div class="kpi-value text-red">+26<span class="kpi-unit">%</span></div>
+                        <span class="kpi-description">>15 mm/hr downpours cause significant waterlogging delays</span>
+                    </div>
+                </div>
+
+                <!-- 4 Publication-Quality Plot Cards -->
+                <div class="charts-bento-grid">
+                    <div class="apple-card chart-tile">
+                        <div class="chart-tile-header">
+                            <h3 class="chart-title">24-Hour Diurnal Transit Time Profile</h3>
+                            <p class="chart-sub">Response time distribution across hours of the day showing peak-hour surges.</p>
+                        </div>
+                        <img src="/static/plots/02_hourly_response_time_profile.png" alt="Hourly profile" class="chart-image" loading="lazy">
+                    </div>
+
+                    <div class="apple-card chart-tile">
+                        <div class="chart-tile-header">
+                            <h3 class="chart-title">Network Distance vs. Response Time Association</h3>
+                            <p class="chart-sub">Network road distance scatter colored by empirical corridor congestion factors.</p>
+                        </div>
+                        <img src="/static/plots/03_distance_vs_response_time.png" alt="Distance vs Response" class="chart-image" loading="lazy">
+                    </div>
+
+                    <div class="apple-card chart-tile">
+                        <div class="chart-tile-header">
+                            <h3 class="chart-title">Monsoon Rainfall Intensity Impact</h3>
+                            <p class="chart-sub">Boxplots comparing emergency response distributions across rainfall tiers.</p>
+                        </div>
+                        <img src="/static/plots/04_rainfall_intensity_impact.png" alt="Rainfall impact" class="chart-image" loading="lazy">
+                    </div>
+
+                    <div class="apple-card chart-tile">
+                        <div class="chart-tile-header">
+                            <h3 class="chart-title">Champion Model Residuals Diagnostic</h3>
+                            <p class="chart-sub">Observed vs. predicted transit times on 2,395 unseen test incidents (MAE = 0.83 min).</p>
+                        </div>
+                        <img src="/static/plots/06_model_residuals_diagnostic.png" alt="Model diagnostic" class="chart-image" loading="lazy">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 3: DATASET EXPLORER -->
+        <!-- ============================================================== -->
+        <section id="explorer-tab" class="tab-content">
+            <div class="apple-card explorer-card">
+                <div class="explorer-card-header">
+                    <div>
+                        <span class="apple-card-eyebrow">AUDITED DATA CORPUS</span>
+                        <h2 class="apple-card-title">Municipal Emergency Incident Dataset</h2>
+                        <p class="apple-card-sub">Showing clean, validated records ingested into the Star-Schema SQLite/MySQL database.</p>
+                    </div>
+                    <div class="explorer-search-wrapper">
+                        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" id="table-search" placeholder="Search by station, ward, or incident type..." class="apple-search-input">
+                    </div>
+                </div>
+
+                <div class="table-info-strip">
+                    <span class="record-count" id="table-record-count">Showing first 25 records</span>
+                    <span class="db-schema-badge">Star-Schema: 1 Fact Table, 4 Dimension Tables</span>
+                </div>
+
+                <div class="apple-table-viewport">
+                    <table class="apple-table" id="incidents-table">
+                        <thead>
+                            <tr>
+                                <th>Incident ID</th>
+                                <th>Dispatch Timestamp</th>
+                                <th>Responding Station</th>
+                                <th>Destination Ward</th>
+                                <th>Incident Type</th>
+                                <th>Distance</th>
+                                <th>Traffic</th>
+                                <th>Rainfall</th>
+                                <th>Response Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 4: PLAIN ENGLISH ARCHITECTURE & GUIDE -->
+        <!-- ============================================================== -->
+        <section id="guide-tab" class="tab-content">
+            <div class="apple-editorial-container">
+                
+                <div class="editorial-hero">
+                    <span class="section-eyebrow">EXECUTIVE BRIEFING</span>
+                    <h2 class="editorial-title">How the Pune Emergency AI Operates</h2>
+                    <p class="editorial-lead">A plain-English explanation of the end-to-end data pipeline, machine learning modeling, and decision-support architecture.</p>
+                </div>
+
+                <!-- 4 Sequential Flow Cards -->
+                <div class="editorial-flow-grid">
+                    <div class="apple-card flow-tile">
+                        <div class="flow-tile-header">
+                            <span class="flow-step-circle">1</span>
+                            <h3 class="flow-tile-title">Distress Call Received</h3>
+                        </div>
+                        <p class="flow-tile-desc">
+                            A distress call reaches the PMC Fire Control Room (e.g., a commercial fire in Bhavani Peth or vehicle collision on Nagar Road). The dispatcher logs the origin station and incident coordinates.
+                        </p>
+                    </div>
+
+                    <div class="apple-card flow-tile">
+                        <div class="flow-tile-header">
+                            <span class="flow-step-circle">2</span>
+                            <h3 class="flow-tile-title">Real-Time Friction Evaluated</h3>
+                        </div>
+                        <p class="flow-tile-desc">
+                            The system assesses current friction: distance, 18:30 evening gridlock, heavy monsoon downpours (>15 mm/hr), and narrow 3-meter heritage alleyways in Pune's central peth areas.
+                        </p>
+                    </div>
+
+                    <div class="apple-card flow-tile">
+                        <div class="flow-tile-header">
+                            <span class="flow-step-circle">3</span>
+                            <h3 class="flow-tile-title">Gradient Boosting Inference</h3>
+                        </div>
+                        <p class="flow-tile-desc">
+                            Our champion Gradient Boosting model evaluates 15 engineered features, predicting transit time with a tight Mean Absolute Error of 0.83 minutes and calculating a 90% confidence window.
+                        </p>
+                    </div>
+
+                    <div class="apple-card flow-tile">
+                        <div class="flow-tile-header">
+                            <span class="flow-step-circle">4</span>
+                            <h3 class="flow-tile-title">Proactive Early Delay Warning</h3>
+                        </div>
+                        <p class="flow-tile-desc">
+                            If arrival is forecasted to exceed the 20-minute municipal threshold, the system triggers an operational alert, prompting dispatchers to coordinate with traffic police for green corridor clearance.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Frequently Asked Questions (Apple Accordion Style) -->
+                <div class="apple-faq-container">
+                    <h3 class="faq-heading">Frequently Addressed Questions</h3>
+
+                    <div class="faq-card apple-card">
+                        <div class="faq-q">Why not simply use consumer navigation apps like Google Maps?</div>
+                        <div class="faq-a">
+                            Consumer navigation APIs calculate speed for passenger sedans. Heavy multi-ton fire tenders cannot maneuver narrow 3-meter peth alleys or navigate waterlogged underpasses at passenger speeds. Emergency vehicles also possess siren clearance rights on major bypasses. Our model captures these unique operational physics.
+                        </div>
+                    </div>
+
+                    <div class="faq-card apple-card">
+                        <div class="faq-q">Does this system replace municipal dispatchers?</div>
+                        <div class="faq-a">
+                            <strong>No.</strong> This is strictly a decision-support and city-planning platform. It equips human dispatchers with quantitative foresight during severe weather and helps municipal authorities determine optimal locations for future fire sub-stations.
+                        </div>
+                    </div>
+
+                    <div class="faq-card apple-card">
+                        <div class="faq-q">Why is the project focused specifically on Pune?</div>
+                        <div class="faq-a">
+                            Urban transit dynamics, rainfall intensity, and heritage road networks vary drastically across Indian cities. A generalized "pan-India" model without localized calibration would lack predictive accuracy. Grounding the study in Pune's 14 stations and 15 wards ensures empirical validity.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================================================================== -->
+    <!-- 5. APPLE GLOBAL FOOTER -->
+    <!-- ==================================================================== -->
+    <footer class="apple-footer">
+        <div class="footer-container">
+            <div class="footer-disclaimer">
+                <p>1. Data represents municipal dispatch records for the Pune Metropolitan Area (PMC Fire Brigade). Raw GPS coordinates and private telematics are protected under India's Digital Personal Data Protection (DPDP) Act 2023.</p>
+                <p>2. Performance metrics reflect chronological out-of-time test evaluation on 2,395 dispatches across Q3–Q4 2024 with zero data leakage.</p>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copy">
+                    Copyright &copy; 2026 Pune Emergency Response System. Portfolio Demonstration.
+                </div>
+                <div class="footer-links">
+                    <a href="#simulator" class="footer-link">Simulator</a>
+                    <a href="#analytics" class="footer-link">City Analytics</a>
+                    <a href="#explorer" class="footer-link">Dataset</a>
+                    <a href="#guide" class="footer-link">Architecture</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>

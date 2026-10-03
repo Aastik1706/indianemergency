@@ -1,0 +1,1501 @@
+/* ==========================================================================
+   PUNE EMERGENCY RESPONSE SYSTEM - APPLE CUPERTINO DESIGN SYSTEM
+   Aesthetics: San Francisco Typography, Frosted Glass Blur, Clean White Bento Cards,
+   Apple macOS/iOS Segmented Controls, Soft Ambient Elevation, No AI "Vibe Coding".
+   ========================================================================== */
+
+:root {
+    /* Apple Human Interface Color Palette */
+    --apple-bg: #f5f5f7;
+    --apple-surface: #ffffff;
+    --apple-surface-secondary: #fbfbfd;
+    --apple-surface-tertiary: #f0f0f2;
+    --apple-segmented-bg: rgba(118, 118, 128, 0.12);
+
+    --apple-text-primary: #1d1d1f;
+    --apple-text-secondary: #6e6e73;
+    --apple-text-tertiary: #86868b;
+    --apple-text-quaternary: #a1a1a6;
+
+    --apple-blue: #0071e3;
+    --apple-blue-hover: #0077ed;
+    --apple-blue-subtle: rgba(0, 113, 227, 0.08);
+
+    --apple-green: #34c759;
+    --apple-green-text: #248a3d;
+    --apple-green-subtle: rgba(52, 199, 89, 0.12);
+
+    --apple-orange: #ff9500;
+    --apple-orange-text: #c93b00;
+    --apple-orange-subtle: rgba(255, 149, 0, 0.12);
+
+    --apple-red: #ff3b30;
+    --apple-red-text: #d70015;
+    --apple-red-subtle: rgba(255, 59, 48, 0.12);
+
+    /* Apple Borders & Radii */
+    --border-hairline: 1px solid rgba(0, 0, 0, 0.08);
+    --border-subtle: 1px solid rgba(0, 0, 0, 0.04);
+    --border-input: 1px solid #d2d2d7;
+
+    --radius-xs: 8px;
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --radius-xl: 28px;
+    --radius-pill: 980px;
+
+    /* Apple Ambient Shadows */
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+    --shadow-elevated: 0 12px 36px rgba(0, 0, 0, 0.07), 0 4px 12px rgba(0, 0, 0, 0.02);
+    --shadow-segmented: 0 1px 4px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.06);
+
+    --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Inter", Arial, sans-serif;
+    --transition-apple: 0.22s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Base Reset & Typography */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-stack);
+    background-color: var(--apple-bg);
+    color: var(--apple-text-primary);
+    line-height: 1.47059;
+    letter-spacing: -0.015em;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   1. Apple Global Navigation Bar (44px Minimal Frosted Glass)
+   ========================================================================== */
+.apple-global-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: var(--border-hairline);
+    display: flex;
+    align-items: center;
+}
+
+.nav-content {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    text-decoration: none;
+    color: var(--apple-text-primary);
+}
+
+.brand-icon {
+    width: 20px;
+    height: 20px;
+    stroke: var(--apple-text-primary);
+}
+
+.brand-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--apple-text-tertiary);
+    background: var(--apple-surface-tertiary);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    margin-left: 0.2rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-size: 0.82rem;
+    color: var(--apple-text-secondary);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    transition: color var(--transition-apple);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--apple-text-primary);
+}
+
+.apple-pill-btn-small {
+    background: var(--apple-blue);
+    color: #ffffff;
+    border: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    font-family: inherit;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: var(--transition-apple);
+}
+
+.apple-pill-btn-small:hover {
+    background: var(--apple-blue-hover);
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   2. Apple Hero Showcase (Bold, Clean, Confident)
+   ========================================================================== */
+.apple-hero {
+    padding: 4.5rem 1.5rem 3.5rem;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, var(--apple-bg) 100%);
+    border-bottom: var(--border-hairline);
+}
+
+.hero-container {
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+.hero-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--apple-blue);
+    display: inline-block;
+    margin-bottom: 0.85rem;
+}
+
+.hero-headline {
+    font-size: clamp(2.4rem, 5.2vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.06;
+    color: var(--apple-text-primary);
+    margin-bottom: 1.35rem;
+}
+
+.hero-headline-sub {
+    color: var(--apple-text-tertiary);
+    font-weight: 600;
+}
+
+.hero-description {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.48;
+    color: var(--apple-text-secondary);
+    max-width: 760px;
+    margin: 0 auto 3rem;
+    letter-spacing: -0.015em;
+}
+
+/* Apple 4-Pill Metric Showcase */
+.hero-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .hero-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 520px) {
+    .hero-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hero-stat-card {
+    background: var(--apple-surface);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+    padding: 1.35rem 1rem;
+    box-shadow: var(--shadow-subtle);
+    transition: transform var(--transition-apple), box-shadow var(--transition-apple);
+}
+
+.hero-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+}
+
+.hero-stat-value {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--apple-text-primary);
+    line-height: 1.1;
+    margin-bottom: 0.35rem;
+}
+
+.stat-unit {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--apple-text-tertiary);
+}
+
+.hero-stat-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+    margin-bottom: 0.2rem;
+}
+
+.hero-stat-sub {
+    font-size: 0.72rem;
+    color: var(--apple-text-tertiary);
+}
+
+/* ==========================================================================
+   3. Apple Sticky Segmented Tab Bar
+   ========================================================================== */
+.apple-segmented-bar-wrapper {
+    position: sticky;
+    top: 48px;
+    z-index: 900;
+    background: rgba(245, 245, 247, 0.88);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: var(--border-hairline);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.apple-segmented-bar {
+    display: inline-flex;
+    background: var(--apple-segmented-bg);
+    padding: 3px;
+    border-radius: var(--radius-pill);
+    gap: 3px;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--apple-text-secondary);
+    padding: 0.5rem 1.25rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    white-space: nowrap;
+    transition: all var(--transition-apple);
+    outline: none;
+}
+
+.nav-btn svg {
+    opacity: 0.7;
+    transition: opacity var(--transition-apple);
+}
+
+.nav-btn:hover {
+    color: var(--apple-text-primary);
+}
+
+.nav-btn.active {
+    background: var(--apple-surface);
+    color: var(--apple-text-primary);
+    font-weight: 600;
+    box-shadow: var(--shadow-segmented);
+}
+
+.nav-btn.active svg {
+    opacity: 1;
+    stroke: var(--apple-blue);
+}
+
+/* ==========================================================================
+   4. Main Content Container & Apple Cards
+   ========================================================================== */
+.app-main {
+    max-width: 1240px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.25rem 1.5rem 4rem;
+    flex: 1;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: appleSubtleFade 0.3s ease;
+}
+
+@keyframes appleSubtleFade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.apple-card {
+    background: var(--apple-surface);
+    border: var(--border-hairline);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.85rem;
+}
+
+.apple-card-header {
+    margin-bottom: 1.35rem;
+}
+
+.apple-card-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--apple-text-tertiary);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.apple-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--apple-text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.apple-card-sub {
+    font-size: 0.85rem;
+    color: var(--apple-text-secondary);
+    line-height: 1.45;
+}
+
+/* ==========================================================================
+   Tab 1: Prediction Simulator & Bento Layout
+   ========================================================================== */
+.preset-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.preset-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--apple-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.preset-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.preset-btn {
+    background: var(--apple-surface);
+    border: var(--border-hairline);
+    color: var(--apple-text-secondary);
+    font-size: 0.78rem;
+    font-weight: 500;
+    font-family: inherit;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-apple);
+}
+
+.preset-btn:hover {
+    color: var(--apple-text-primary);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.preset-btn.active {
+    background: var(--apple-text-primary);
+    color: #ffffff;
+    border-color: var(--apple-text-primary);
+}
+
+.simulator-bento-grid {
+    display: grid;
+    grid-template-columns: 460px 1fr;
+    gap: 1.75rem;
+    align-items: start;
+}
+
+@media (max-width: 1040px) {
+    .simulator-bento-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Apple Form Inputs */
+.apple-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.form-row label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label-text {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+    letter-spacing: -0.01em;
+}
+
+.apple-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    background: var(--apple-surface-tertiary);
+    color: var(--apple-text-secondary);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-pill);
+    border: var(--border-hairline);
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.apple-select {
+    width: 100%;
+    background: var(--apple-surface);
+    border: var(--border-input);
+    color: var(--apple-text-primary);
+    font-size: 0.9rem;
+    font-family: inherit;
+    padding: 0.75rem 2.2rem 0.75rem 0.95rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-apple);
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1em;
+}
+
+.apple-select:focus {
+    outline: none;
+    border-color: var(--apple-blue);
+    box-shadow: 0 0 0 3px var(--apple-blue-subtle);
+}
+
+/* Apple Sliders */
+.slider-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.4rem;
+}
+
+.slider-display-val {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+}
+
+.slider-display-val.highlight {
+    color: var(--apple-blue);
+}
+
+.apple-slider {
+    width: 100%;
+    height: 5px;
+    background: #e5e5ea;
+    border-radius: var(--radius-pill);
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.apple-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 0.5px 1px rgba(0, 0, 0, 0.08);
+    border: 0.5px solid rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.apple-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.slider-tick-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--apple-text-tertiary);
+    margin-top: 0.35rem;
+}
+
+/* Apple Segmented Weather Switcher */
+.weather-segmented-control {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: var(--apple-segmented-bg);
+    padding: 3px;
+    border-radius: var(--radius-sm);
+    gap: 3px;
+}
+
+.weather-btn {
+    background: transparent;
+    border: none;
+    color: var(--apple-text-secondary);
+    padding: 0.55rem 0.35rem;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 500;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    transition: all var(--transition-apple);
+}
+
+.weather-btn:hover {
+    color: var(--apple-text-primary);
+}
+
+.weather-btn.active {
+    background: var(--apple-surface);
+    color: var(--apple-text-primary);
+    font-weight: 600;
+    box-shadow: var(--shadow-segmented);
+}
+
+.weather-symbol {
+    font-size: 1.15rem;
+}
+
+.apple-primary-btn {
+    width: 100%;
+    background: var(--apple-blue);
+    color: #ffffff;
+    border: none;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    box-shadow: 0 2px 8px rgba(0, 113, 227, 0.25);
+    transition: all var(--transition-apple);
+}
+
+.apple-primary-btn:hover {
+    background: var(--apple-blue-hover);
+    box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+    transform: translateY(-1px);
+}
+
+.apple-primary-btn:active {
+    transform: scale(0.985);
+}
+
+/* Results Bento Column */
+.results-bento-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.result-card {
+    padding: 2rem;
+}
+
+.result-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.big-metric-container {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+}
+
+.big-metric-number {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--apple-text-primary);
+    line-height: 1;
+}
+
+.big-metric-unit {
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--apple-text-tertiary);
+}
+
+/* Apple Status Pill */
+.apple-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    background: var(--apple-surface-tertiary);
+    color: var(--apple-text-secondary);
+}
+
+.status-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.apple-status-pill.normal {
+    background: var(--apple-green-subtle);
+    color: var(--apple-green-text);
+}
+
+.apple-status-pill.alert {
+    background: var(--apple-red-subtle);
+    color: var(--apple-red-text);
+}
+
+.result-stats-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.25rem;
+    padding: 1.35rem 0;
+    border-top: var(--border-hairline);
+    border-bottom: var(--border-hairline);
+}
+
+.stat-pill-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.stat-pill-label {
+    font-size: 0.75rem;
+    color: var(--apple-text-tertiary);
+}
+
+.stat-pill-val {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+    letter-spacing: -0.02em;
+}
+
+.apple-callout {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-top: 1.35rem;
+    background: var(--apple-surface-secondary);
+    border: var(--border-hairline);
+    padding: 0.95rem 1.15rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--apple-text-secondary);
+}
+
+.callout-icon {
+    flex-shrink: 0;
+    stroke: var(--apple-blue);
+    margin-top: 0.15rem;
+}
+
+/* Map Card */
+.map-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.apple-map-legend {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.78rem;
+    color: var(--apple-text-secondary);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.legend-dot.station { background: var(--apple-red); }
+.legend-dot.ward { background: var(--apple-blue); }
+
+.apple-map-viewport {
+    height: 380px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: var(--border-hairline);
+}
+
+/* ==========================================================================
+   Tab 2: Citywide Operational Analytics
+   ========================================================================== */
+.section-heading {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+}
+
+.section-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--apple-blue);
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--apple-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.section-sub {
+    font-size: 0.95rem;
+    color: var(--apple-text-secondary);
+    line-height: 1.5;
+}
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-tile {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.kpi-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--apple-text-tertiary);
+}
+
+.kpi-value {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--apple-text-primary);
+    line-height: 1.1;
+    margin: 0.2rem 0;
+}
+
+.kpi-unit {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--apple-text-tertiary);
+}
+
+.kpi-description {
+    font-size: 0.8rem;
+    color: var(--apple-text-secondary);
+}
+
+.text-blue { color: var(--apple-blue); }
+.text-orange { color: var(--apple-orange); }
+.text-red { color: var(--apple-red); }
+
+.charts-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 960px) {
+    .charts-bento-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.chart-tile {
+    padding: 1.5rem;
+}
+
+.chart-tile-header {
+    margin-bottom: 1.25rem;
+}
+
+.chart-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--apple-text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.chart-sub {
+    font-size: 0.82rem;
+    color: var(--apple-text-secondary);
+    line-height: 1.4;
+}
+
+.chart-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    border: var(--border-hairline);
+    display: block;
+}
+
+/* ==========================================================================
+   Tab 3: Dataset Explorer
+   ========================================================================== */
+.explorer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.explorer-search-wrapper {
+    position: relative;
+    min-width: 300px;
+}
+
+@media (max-width: 600px) {
+    .explorer-search-wrapper {
+        min-width: 100%;
+    }
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.95rem;
+    top: 50%;
+    transform: translateY(-50%);
+    stroke: var(--apple-text-tertiary);
+}
+
+.apple-search-input {
+    width: 100%;
+    background: var(--apple-surface-secondary);
+    border: var(--border-input);
+    color: var(--apple-text-primary);
+    padding: 0.65rem 1rem 0.65rem 2.4rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-family: inherit;
+    transition: all var(--transition-apple);
+}
+
+.apple-search-input:focus {
+    outline: none;
+    border-color: var(--apple-blue);
+    background: var(--apple-surface);
+    box-shadow: 0 0 0 3px var(--apple-blue-subtle);
+}
+
+.table-info-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--apple-text-tertiary);
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.db-schema-badge {
+    background: var(--apple-surface-tertiary);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+}
+
+.apple-table-viewport {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: var(--border-hairline);
+}
+
+.apple-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.apple-table th {
+    background: var(--apple-surface-secondary);
+    color: var(--apple-text-secondary);
+    font-weight: 600;
+    padding: 0.85rem 1rem;
+    border-bottom: var(--border-hairline);
+    white-space: nowrap;
+}
+
+.apple-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #f0f0f2;
+    color: var(--apple-text-primary);
+    white-space: nowrap;
+}
+
+.apple-table tr:hover {
+    background: rgba(0, 0, 0, 0.015);
+}
+
+/* ==========================================================================
+   Tab 4: Plain English Architecture & Guide
+   ========================================================================== */
+.apple-editorial-container {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.editorial-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.editorial-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--apple-text-primary);
+    margin-bottom: 0.6rem;
+}
+
+.editorial-lead {
+    font-size: 1.15rem;
+    color: var(--apple-text-secondary);
+    line-height: 1.5;
+    letter-spacing: -0.015em;
+}
+
+.editorial-flow-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+}
+
+.flow-tile {
+    padding: 1.65rem 1.85rem;
+}
+
+.flow-tile-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.flow-step-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--apple-text-primary);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.flow-tile-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+}
+
+.flow-tile-desc {
+    font-size: 0.92rem;
+    color: var(--apple-text-secondary);
+    line-height: 1.55;
+    padding-left: 3rem;
+}
+
+@media (max-width: 600px) {
+    .flow-tile-desc {
+        padding-left: 0;
+    }
+}
+
+.apple-faq-container {
+    border-top: var(--border-hairline);
+    padding-top: 3rem;
+}
+
+.faq-heading {
+    font-size: 1.45rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.faq-card {
+    margin-bottom: 1.25rem;
+    padding: 1.5rem 1.75rem;
+}
+
+.faq-q {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.faq-a {
+    font-size: 0.9rem;
+    color: var(--apple-text-secondary);
+    line-height: 1.55;
+}
+
+/* ==========================================================================
+   5. Apple Global Footer
+   ========================================================================== */
+.apple-footer {
+    background: var(--apple-surface);
+    border-top: var(--border-hairline);
+    padding: 2.5rem 1.5rem;
+    font-size: 0.78rem;
+    color: var(--apple-text-tertiary);
+    line-height: 1.6;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-disclaimer {
+    border-bottom: var(--border-hairline);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-link {
+    color: var(--apple-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-apple);
+}
+
+.footer-link:hover {
+    color: var(--apple-text-primary);
+}
+
+/* ==========================================================================
+   6. Apple Cupertino Location Search & Auto-Dispatch Styles
+   ========================================================================== */
+.input-mode-switcher-container {
+    margin-bottom: 1.5rem;
+}
+
+.apple-sub-segmented-control {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--apple-segmented-bg);
+    padding: 3px;
+    border-radius: var(--radius-pill);
+    gap: 3px;
+}
+
+.mode-tab-btn {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--apple-text-secondary);
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-apple);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.mode-tab-btn:hover {
+    color: var(--apple-text-primary);
+}
+
+.mode-tab-btn.active {
+    background: var(--apple-surface);
+    color: var(--apple-text-primary);
+    font-weight: 600;
+    box-shadow: var(--shadow-segmented);
+}
+
+.apple-text-btn {
+    background: transparent;
+    border: none;
+    color: var(--apple-blue);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-pill);
+    transition: all var(--transition-apple);
+}
+
+.apple-text-btn:hover {
+    background: var(--apple-blue-subtle);
+}
+
+/* Location Search Input & Autocomplete */
+.location-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.location-search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    stroke: var(--apple-text-tertiary);
+    pointer-events: none;
+}
+
+.apple-search-input-field {
+    width: 100%;
+    background: var(--apple-surface);
+    border: var(--border-input);
+    color: var(--apple-text-primary);
+    padding: 0.8rem 2.4rem 0.8rem 2.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    font-family: inherit;
+    transition: all var(--transition-apple);
+}
+
+.apple-search-input-field:focus {
+    outline: none;
+    border-color: var(--apple-blue);
+    box-shadow: 0 0 0 3px var(--apple-blue-subtle);
+}
+
+.clear-input-btn {
+    position: absolute;
+    right: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--apple-surface-tertiary);
+    border: none;
+    color: var(--apple-text-secondary);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.suggestions-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--apple-surface);
+    border: var(--border-hairline);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-elevated);
+    z-index: 500;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.suggestion-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background var(--transition-apple);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background: var(--apple-surface-secondary);
+}
+
+.suggestion-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--apple-text-primary);
+}
+
+.suggestion-category {
+    font-size: 0.72rem;
+    color: var(--apple-text-tertiary);
+    background: var(--apple-surface-tertiary);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+}
+
+/* Locality Quick Chips */
+.sub-label-text {
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: var(--apple-text-tertiary);
+    margin-bottom: 0.2rem;
+}
+
+.locality-chips-wrapper {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    max-height: 80px;
+    overflow-y: auto;
+    padding-bottom: 2px;
+}
+
+.locality-chip {
+    background: var(--apple-surface-secondary);
+    border: var(--border-hairline);
+    color: var(--apple-text-secondary);
+    font-size: 0.76rem;
+    font-family: inherit;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-apple);
+    white-space: nowrap;
+}
+
+.locality-chip:hover {
+    color: var(--apple-text-primary);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.locality-chip.active {
+    background: var(--apple-blue);
+    color: #ffffff;
+    border-color: var(--apple-blue);
+}
+
+/* Dispatch Match Card */
+.apple-dispatch-match-card {
+    background: rgba(0, 113, 227, 0.035);
+    border: 1px solid rgba(0, 113, 227, 0.14);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.25rem;
+    margin-top: 0.4rem;
+}
+
+.match-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.95rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.match-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--apple-blue);
+    text-transform: uppercase;
+}
+
+.match-loc {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+}
+
+.match-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+}
+
+@media (max-width: 500px) {
+    .match-card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.match-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.match-label {
+    font-size: 0.72rem;
+    color: var(--apple-text-tertiary);
+}
+
+.match-value {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+    letter-spacing: -0.01em;
+}
+
+.match-sub {
+    font-size: 0.72rem;
+    color: var(--apple-text-secondary);
+}
+
+/* Clock Arrival Time Callout */
+.clock-arrival-callout {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--apple-text-primary);
+    background: rgba(0, 113, 227, 0.08);
+    border: 1px solid rgba(0, 113, 227, 0.16);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    margin-top: 0.75rem;
+}
+
+.clock-arrival-callout svg {
+    stroke: var(--apple-blue);
+}
+
+.map-hint {
+    font-size: 0.78rem;
+    color: var(--apple-text-tertiary);
+    margin-top: 0.15rem;
+}
+
+.legend-dot.user-pin {
+    background: #0071e3;
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
+}
+
