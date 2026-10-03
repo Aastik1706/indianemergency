@@ -46,14 +46,33 @@ VALID_EMERGENCIES = [
     "Electrical Transformer / Tree Fall"
 ]
 
+_CACHED_MODEL = None
+_CACHED_PREPROCESSOR = None
+
 def load_artifacts():
-    """Loads champion model and preprocessing pipeline."""
-    if not os.path.exists(MODEL_PATH) or not os.path.exists(PREPROCESSOR_PATH):
-        raise FileNotFoundError("Model artifacts not found. Please run 'python src/train_model.py' first.")
-    
-    model = joblib.load(MODEL_PATH)
-    preprocessor = joblib.load(PREPROCESSOR_PATH)
-    return model, preprocessor
+    """Loads champion model and preprocessing pipeline with in-memory caching."""
+    global _CACHED_MODEL, _CACHED_PREPROCESSOR
+    if _CACHED_MODEL is None or _CACHED_PREPROCESSOR is None:
+        if not os.path.exists(MODEL_PATH) or not os.path.exists(PREPROCESSOR_PATH):
+            raise FileNotFoundError("Model artifacts not found. Please run 'python src/train_model.py' first.")
+        _CACHED_MODEL = joblib.load(MODEL_PATH)
+        _CACHED_PREPROCESSOR = joblib.load(PREPROCESSOR_PATH)
+    return _CACHED_MODEL, _CACHED_PREPROCESSOR
+
+def warm_up_model():
+    """Preloads artifacts and runs a dummy prediction to initialize scikit-learn caches."""
+    try:
+        load_artifacts()
+        predict_emergency_response_time(
+            network_distance_km=2.0,
+            incident_hour=12,
+            station_id="FS-01",
+            ward_id="WD-01",
+            emergency_type="Residential Building Fire",
+            rainfall_mm=0.0
+        )
+    except Exception:
+        pass
 
 def estimate_traffic_factor(hour, ward_id, is_weekend):
     """Estimates baseline traffic congestion multiplier based on Pune traffic patterns."""

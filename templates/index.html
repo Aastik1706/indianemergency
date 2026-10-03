@@ -6,9 +6,14 @@
     <title>Pune Emergency Response System | Apple Cupertino Edition</title>
     <meta name="description" content="AI decision-support and emergency vehicle transit time prediction system for Pune Municipal Corporation Fire Brigade.">
     
-    <!-- SF Pro Display & Text Typography via Apple Font Stack and Google Fonts Inter fallback -->
+    <!-- Preconnect & DNS-Prefetch for CDN & Tile performance -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://basemaps.cartocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="/static/style.css" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Leaflet CSS for Map -->
@@ -310,6 +315,10 @@
                                 <span>18:00 (Evening Peak)</span>
                                 <span>23:00</span>
                             </div>
+                            <div class="traffic-surge-meter" id="traffic-surge-meter">
+                                <span class="surge-meter-dot orange" id="traffic-surge-dot"></span>
+                                <span class="surge-meter-text" id="traffic-surge-text">Traffic Friction: Evening Peak Congestion (+45% Surcharge)</span>
+                            </div>
                         </div>
 
                         <!-- Weather Segmented Pill Control -->
@@ -388,6 +397,18 @@
                             <div class="callout-content">
                                 <strong>System Ready:</strong> Enter your Pune location or click anywhere on the map to evaluate arrival time.
                             </div>
+                        </div>
+
+                        <!-- Dispatch Actions Strip -->
+                        <div class="prediction-actions-strip">
+                            <button type="button" class="apple-secondary-btn" id="btn-copy-briefing">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                                <span id="copy-briefing-text">Copy Dispatch Briefing</span>
+                            </button>
+                            <span class="live-sync-badge">
+                                <span class="live-sync-pulse"></span>
+                                <span>Real-Time Model Active</span>
+                            </span>
                         </div>
                     </div>
 
@@ -516,21 +537,33 @@
                     <table class="apple-table" id="incidents-table">
                         <thead>
                             <tr>
-                                <th>Incident ID</th>
-                                <th>Dispatch Timestamp</th>
-                                <th>Responding Station</th>
-                                <th>Destination Ward</th>
-                                <th>Incident Type</th>
-                                <th>Distance</th>
-                                <th>Traffic</th>
-                                <th>Rainfall</th>
-                                <th>Response Time</th>
+                                <th class="table-sort-header" data-sort="incident_id">Incident ID <span class="sort-icon">↕</span></th>
+                                <th class="table-sort-header" data-sort="dispatch_timestamp">Dispatch Timestamp <span class="sort-icon">↕</span></th>
+                                <th class="table-sort-header" data-sort="station_name">Responding Station <span class="sort-icon">↕</span></th>
+                                <th class="table-sort-header" data-sort="ward_name">Destination Ward <span class="sort-icon">↕</span></th>
+                                <th class="table-sort-header" data-sort="emergency_type">Incident Type <span class="sort-icon">↕</span></th>
+                                <th class="table-sort-header" data-sort="network_distance_km">Distance <span class="sort-icon">↕</span></th>
+                                <th class="table-sort-header" data-sort="traffic_congestion_factor">Traffic <span class="sort-icon">↕</span></th>
+                                <th class="table-sort-header" data-sort="rainfall_mm">Rainfall <span class="sort-icon">↕</span></th>
+                                <th class="table-sort-header" data-sort="response_time_minutes">Response Time <span class="sort-icon">↕</span></th>
                             </tr>
                         </thead>
                         <tbody id="table-body">
                             <!-- Populated dynamically via JS -->
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Table Pagination Footer -->
+                <div class="table-pagination-footer">
+                    <div class="pagination-info">
+                        <span id="pagination-status">Loading incidents...</span>
+                    </div>
+                    <div class="pagination-actions">
+                        <button type="button" class="apple-pill-btn-small" id="btn-prev-page" disabled>&larr; Previous</button>
+                        <span class="pagination-page-label" id="current-page-label">Page 1 / 480</span>
+                        <button type="button" class="apple-pill-btn-small" id="btn-next-page">Next &rarr;</button>
+                    </div>
                 </div>
             </div>
         </section>
