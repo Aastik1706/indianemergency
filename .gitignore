@@ -17,5 +17,8 @@ Thumbs.db
 
 # Logs & IDE
 *.log
+*.err
+*.webloc
+*.plist
 .vscode/
 .idea/
