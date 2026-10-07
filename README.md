@@ -12,7 +12,7 @@ You don't need to run complicated terminal commands to use and showcase this pro
 .venv/bin/python app.py
 
 # 2. Open this URL in your web browser:
-http://127.0.0.1:5000
+http://127.0.0.1:8080
 ```
 
 ---
