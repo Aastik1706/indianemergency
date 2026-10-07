@@ -457,11 +457,3 @@ emergency-response-india/
    ```
 
 ---
-
-## 31. Resume-Ready Project Descriptions
-
-### For Data Scientist Roles:
-> Engineered an end-to-end emergency response time prediction system for Pune, India ($11,973$ validated incidents). Implemented leakage-free chronological train/test splits, engineered cyclical temporal and traffic-rain interaction features, and compared Linear Regression, Random Forest, and Gradient Boosting models. Champion Gradient Boosting model achieved **$0.829\text{ min MAE}$** ($R^2 = 0.9276$) with **$81.6\%\text{ recall}$** on high-delay incidents ($>20\text{ min}$), accompanied by empirical 90% prediction intervals.
-
-### For Data Analyst / Business Analyst Roles:
-> Designed a relational star-schema data warehouse in MySQL/SQLite and built analytical queries utilizing CTEs, window functions, and rolling averages on municipal emergency response records. Executed non-parametric hypothesis testing (Mann-Whitney U, Kruskal-Wallis) proving a statistically significant **$45\%\text{ response delay surge}$** during evening peak traffic ($p < 0.001$). Developed an enriched denormalized data pipeline powering a 4-tab Tableau Public interactive dashboard for operational planning.
